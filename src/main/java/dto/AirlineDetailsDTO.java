@@ -51,6 +51,12 @@ public class AirlineDetailsDTO implements Comparable<AirlineDetailsDTO>{
 	public int compareTo(AirlineDetailsDTO airlineDetailsDTO) {
 		  return (this.getAirlineFare() < airlineDetailsDTO.getAirlineFare() ? -1 : 
 	            (this.getAirlineFare() == airlineDetailsDTO.getAirlineFare() ? 0 : 1));  
+	}
+
+	@Override
+	public String toString() {
+		return "AirlineDetailsDTO [airlineName=" + airlineName + ", airlineTime=" + airlineTime + ", airlineFare="
+				+ airlineFare + ", index=" + index + "]";
 	}   
 	
 }
