@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="3" guice-stage="DEVELOPMENT" name="Failed suite [Suite]" parallel="methods">
+  <parameter name="myBrowser" value="firefox"/>
+  <test name="ChromeTest">
+    <parameter name="myBrowser" value="chrome"/>
+    <classes>
+      <class name="MyTestRunner.TestNGRunCucumberTestRunner"/>
+    </classes>
+  </test> <!-- ChromeTest -->
+  <test name="FirefoxTest">
+    <parameter name="myBrowser" value="firefox"/>
+    <classes>
+      <class name="MyTestRunner.TestNGRunCucumberTestRunner"/>
+    </classes>
+  </test> <!-- FirefoxTest -->
+</suite> <!-- Failed suite [Suite] -->

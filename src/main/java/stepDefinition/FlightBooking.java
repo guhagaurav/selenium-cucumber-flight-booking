@@ -1,8 +1,7 @@
-package StepDefinitions;
+package stepDefinition;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,58 +9,64 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import javax.swing.Popup;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import MyTestRunner.TestNGRunCucumberTestRunner;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import dto.AirlineDetailsDTO;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import junit.framework.Assert;
 import utility.AirlineFareSorter;
 
-public class LoginSteps {
-	
-	WebDriver driver;
-	
-	@Before
-	public void beforeScenario() 
-	{
-		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\src\\main\\java\\resources\\chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	}
+public class FlightBooking extends TestNGRunCucumberTestRunner{
 
-	@After
-	public void afterScenario() 
-	{
-	    driver.quit();
-	}
-	
+
 	@Given("^I login into the application$")
 	public void applicationHomePage() {
 		driver.get("https://www.cheapoair.com");
 	}
-
-	@Given("I click on oneway trip")
-	public void i_click_on_oneway_trip() {
-		driver.findElements(By.cssSelector(".custom-control-label")).get(1).click();
-		driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+	
+	private boolean checkElementPresent(String locator){
+		try {
+			popupClose();
+			List<WebElement> ele = driver.findElements(By.cssSelector(locator));
+			if(ele.size()>0) {
+				return true;
+			}
+			if(ele.size() == 0) {
+				return false;
+			}
+		}
+		catch(Exception e) {
+			return false;
+		}
+		return false;
 	}
 	
-	@Given("I enter from destination {string} and to destination {string}")
+	@Given("I click on oneway trip")
+	public void i_click_on_oneway_trip() {
+	String locator = ".custom-control-label";
+	if(checkElementPresent(locator)) {
+			driver.findElements(By.cssSelector(locator)).get(1).click();
+			driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+	
+	}
+	else {
+		i_click_on_oneway_trip();
+	}
+		
+	}
+	
+	@Given("I enter from destination '(.*)' and to destination '(.*)'")
 	public void i_enter_from_destination_and_to_destination(String fromDest, String toDest) {
 	  driver.findElement(By.id("from0")).clear();
 	  driver.findElement(By.id("from0")).sendKeys(fromDest);
@@ -70,7 +75,7 @@ public class LoginSteps {
 	
 	}
 
-	@Given("I enter travel date {string}")
+	@Given("I enter travel date '(.*)'")
 	public void i_enter_travel_date(String journeyDate) {
 		driver.findElement(By.id("cal0")).click();
 
@@ -124,36 +129,40 @@ public class LoginSteps {
 	@When("I click on shortest tab")
 	public void i_click_on_shortest_tab() {
 		popupClose();
-		WebDriverWait wait = new WebDriverWait(driver, 10); 
+		WebDriverWait wait = new WebDriverWait(driver, 25); 
 		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".sort__item.is--duration")));
 		element.click();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 	}
 	
-	@SuppressWarnings("null")
 	@Then("I select cheapest shortest evening flight")
 	public void i_select_cheapest_shortest_evening_flight() {
-		boolean staleElement = true; 
 		int flightCount = 1;
-		while(staleElement){
-		  try{	popupClose();
-				List<WebElement> flightEle = driver.findElements(By.cssSelector(".contract__segment.col-sm-8"));
+		String flightBlockLocator = ".contract__segment.col-sm-8";
+		String flightNameLocator = ".contract-block .airline__name";
+		String flightTimeLocator = ".contract-block .trip__time.is--depart-source .is--flight-time";
+		String flightPriceLocator = ".contract-block .fare__amount--block .fare__amount.is--total .currency";
+		
+		if(checkElementPresent(flightBlockLocator)  // making sure that all the elements in the page have loaded so that stale element exception can be avoided
+				&& checkElementPresent(flightNameLocator) 
+				&& checkElementPresent(flightTimeLocator)
+				&& checkElementPresent(flightPriceLocator)) {
+	            popupClose();
+				List<WebElement> flightEle = driver.findElements(By.cssSelector(flightBlockLocator));
 				flightCount = flightEle.size();
-		        staleElement = false;
-		  } catch(StaleElementReferenceException e){
-		    staleElement = true;
-		  }
-		} 
-				
+		}
+		else {
+			i_select_cheapest_shortest_evening_flight();
+		}	
 		List<AirlineDetailsDTO> airlineList = new ArrayList<AirlineDetailsDTO>();
 		List<AirlineDetailsDTO> airlinePmList = new ArrayList<AirlineDetailsDTO>();
 
 		for(int i=0; i<flightCount; i++) {
 			popupClose();
 			airlineList.add(new AirlineDetailsDTO(
-					driver.findElements(By.cssSelector(".contract-block .airline__name")).get(i).getText().toString(), 
-					driver.findElements(By.cssSelector(".contract-block .trip__time.is--depart-source .is--flight-time")).get(i).getText().split(" ")[1],
-					Integer.parseInt(driver.findElements(By.cssSelector(".contract-block .fare__amount--block .fare__amount.is--total .currency"))
+					driver.findElements(By.cssSelector(flightNameLocator)).get(i).getText().toString(), 
+					driver.findElements(By.cssSelector(flightTimeLocator)).get(i).getText().split(" ")[1],
+					Integer.parseInt(driver.findElements(By.cssSelector(flightPriceLocator))
 							.get(i)
 							.getText()
 							.substring(1)
@@ -170,15 +179,21 @@ public class LoginSteps {
 		System.out.print("Airline with least fare, fastest and operating in evening is:: " + airlinePmSortedList.get(0).getAirlineName() 
 				+" "+"$"+ airlinePmSortedList.get(0).getAirlineFare());
 		
-		popupClose();
-		WebElement element = driver.findElements(By.cssSelector(".cta-1st.select__cta")).get(airlinePmSortedList.get(0).getIndex());
-		Actions actions = new Actions(driver);
-		actions.moveToElement(element);
-		actions.perform();
-		
-		//clicking on the select button at index of the 1st object which is having the least fare.
-		driver.findElements(By.cssSelector(".cta-1st.select__cta")).get(airlinePmSortedList.get(0).getIndex()).click();
-		
+		try {
+			popupClose();
+			WebElement element = driver.findElements(By.cssSelector(".cta-1st.select__cta")).get(airlinePmSortedList.get(0).getIndex());
+			Actions actions = new Actions(driver);
+			actions.moveToElement(element);
+			actions.perform();
+			popupClose();
+			//clicking on the select button at index of the 1st object which is having the least fare.
+			driver.findElements(By.cssSelector(".cta-1st.select__cta")).get(airlinePmSortedList.get(0).getIndex()).click();
+		}
+		catch(Exception e) {
+			popupClose();
+			//clicking on the select button at index of the 1st object which is having the least fare.
+			driver.findElements(By.cssSelector(".cta-1st.select__cta")).get(airlinePmSortedList.get(0).getIndex()).click();
+		}	
 	}
 	
 	@Then("^Close the Browser$")
