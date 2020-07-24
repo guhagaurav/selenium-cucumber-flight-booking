@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = "src\\main\\java\\Features\\Login.feature", //the path of the feature files
+		features = "classpath:Features",
 		glue={"StepDefinitions"}, //the path of the step definition files
 		plugin = {"pretty", "html:target/cucumber-html-report", "json:target/cucumber-json-report.json"},
 		dryRun = false,

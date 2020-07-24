@@ -1,6 +1,6 @@
-Feature: Login Application feature
+Feature: Flight booking
 
-Scenario: User Login Scenario
+Scenario: To select cheapest fastest evening flight
 	Given I login into the application
 	And I click on oneway trip
 	And I enter from destination "PNQ - Pune, India" and to destination "HYD - Hyderabad, India"
