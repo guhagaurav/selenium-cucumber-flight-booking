@@ -47,7 +47,6 @@ public class AirlineDetailsDTO implements Comparable<AirlineDetailsDTO>{
 		this.index = index;
 	}
 	
-	@Override
 	public int compareTo(AirlineDetailsDTO airlineDetailsDTO) {
 		  return (this.getAirlineFare() < airlineDetailsDTO.getAirlineFare() ? -1 : 
 	            (this.getAirlineFare() == airlineDetailsDTO.getAirlineFare() ? 0 : 1));  

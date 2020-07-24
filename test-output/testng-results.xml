@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="2" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Suite" duration-ms="184434" started-at="2020-07-24T18:48:51Z" finished-at="2020-07-24T18:51:56Z">
+    <groups>
+      <group name="cucumber features">
+        <method signature="TestNGRunCucumberTestRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyTestRunner.TestNGRunCucumberTestRunner@56ac3a89]" name="feature" class="MyTestRunner.TestNGRunCucumberTestRunner"/>
+        <method signature="TestNGRunCucumberTestRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyTestRunner.TestNGRunCucumberTestRunner@55d56113]" name="feature" class="MyTestRunner.TestNGRunCucumberTestRunner"/>
+      </group> <!-- cucumber features -->
+    </groups>
+    <test name="ChromeTest" duration-ms="88335" started-at="2020-07-24T18:48:51Z" finished-at="2020-07-24T18:50:20Z">
+      <class name="MyTestRunner.TestNGRunCucumberTestRunner">
+        <test-method status="PASS" signature="setupBrowser(java.lang.String)[pri:0, instance:MyTestRunner.TestNGRunCucumberTestRunner@56ac3a89]" name="setupBrowser" is-config="true" duration-ms="9811" started-at="2020-07-25T00:18:51Z" finished-at="2020-07-25T00:19:01Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chrome]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupBrowser -->
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyTestRunner.TestNGRunCucumberTestRunner@56ac3a89]" name="feature" duration-ms="75693" started-at="2020-07-25T00:19:02Z" description="Runs Cucumber Features" data-provider="features" finished-at="2020-07-25T00:20:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Flight booking]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:MyTestRunner.TestNGRunCucumberTestRunner@56ac3a89]" name="tearDownClass" is-config="true" duration-ms="1954" started-at="2020-07-25T00:20:18Z" finished-at="2020-07-25T00:20:20Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownClass -->
+      </class> <!-- MyTestRunner.TestNGRunCucumberTestRunner -->
+    </test> <!-- ChromeTest -->
+    <test name="FirefoxTest" duration-ms="96047" started-at="2020-07-24T18:50:20Z" finished-at="2020-07-24T18:51:56Z">
+      <class name="MyTestRunner.TestNGRunCucumberTestRunner">
+        <test-method status="PASS" signature="setupBrowser(java.lang.String)[pri:0, instance:MyTestRunner.TestNGRunCucumberTestRunner@55d56113]" name="setupBrowser" is-config="true" duration-ms="7977" started-at="2020-07-25T00:20:20Z" finished-at="2020-07-25T00:20:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[firefox]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupBrowser -->
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:MyTestRunner.TestNGRunCucumberTestRunner@55d56113]" name="feature" duration-ms="80716" started-at="2020-07-25T00:20:28Z" description="Runs Cucumber Features" data-provider="features" finished-at="2020-07-25T00:21:49Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Flight booking]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:MyTestRunner.TestNGRunCucumberTestRunner@55d56113]" name="tearDownClass" is-config="true" duration-ms="7316" started-at="2020-07-25T00:21:49Z" finished-at="2020-07-25T00:21:56Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownClass -->
+      </class> <!-- MyTestRunner.TestNGRunCucumberTestRunner -->
+    </test> <!-- FirefoxTest -->
+  </suite> <!-- Suite -->
+</testng-results>

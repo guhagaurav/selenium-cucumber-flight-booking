@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="methods" thread-count="3">
+    <test name="ChromeTest">
+        <parameter name="myBrowser" value="chrome" />
+        <classes>
+            <class name="MyTestRunner.TestNGRunCucumberTestRunner" />
+        </classes>
+    </test> 
+      <test name="FirefoxTest">
+        <parameter name="myBrowser" value="firefox" />
+        <classes>
+            <class name="MyTestRunner.TestNGRunCucumberTestRunner" />
+        </classes>
+    </test> 
+</suite>
